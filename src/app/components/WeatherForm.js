@@ -18,13 +18,11 @@ const WeatherForm = ({ getWeather }) => {
         navigator.geolocation.getCurrentPosition(
             (info) => {
                 const { latitude, longitude } = info.coords;
-                const API_LOCATION_URL = `https://api.openweathermap.org/data/2.5/weather?lat=${
-                    latitude
-                }&lon=${longitude}&appid=${WEATHER_KEY}`;
+                const API_LOCATION_URL = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${WEATHER_KEY}`;
                 axios
                     .get(API_LOCATION_URL)
                     .then((ubicacion) => {
-                        setFilter(ubicacion.data.name);
+                        setFilter(`Your location: ${ubicacion.data.name}`);
                         setCityId(ubicacion.data.id);
                         setEnableButton(true);
                     })
@@ -55,6 +53,7 @@ const WeatherForm = ({ getWeather }) => {
                 onSubmit={(e) => {
                     e.preventDefault();
                     getWeather(cityId, filter);
+                    setFilter("");
                 }}
                 className="d-grid gap-3"
             >

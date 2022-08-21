@@ -8,7 +8,7 @@ import MapView from "./components/MapView";
 const App = () => {
     const [weatherInfo, setWeatherInfo] = useState({});
     const [cityName, setCityName] = useState("");
-    const [ubication, setUbication ] = useState([]);
+    const [ubication, setUbication] = useState([]);
     const getWeather = async (id, city) => {
         setCityName(city);
         const API_URL = `https://api.openweathermap.org/data/2.5/weather?id=${id}&appid=${WEATHER_KEY}&units=metric`;
@@ -17,13 +17,10 @@ const App = () => {
         setWeatherInfo(response.data);
     };
 
-
-    useEffect(() => {
-        console.log(ubication)
-    }, [weatherInfo, ubication]);
+    useEffect(() => {}, [weatherInfo]);
     return (
         <div className="container p-4">
-            <h1 className="text-center my-4" >Weather Information Searcher</h1>
+            <h1 className="text-center my-4">Weather Information Searcher</h1>
             <div className="d-flex row py-4 justify-content-center">
                 <div className="col-md-6">
                     <WeatherForm getWeather={getWeather} />
@@ -35,12 +32,16 @@ const App = () => {
                     )}
                 </div>
             </div>
-            {
-                ubication.length !== 0 &&
-            <div className="d-flex justify-content-center">
-                <MapView ubication={ubication}/>
-            </div>
-            }
+                {ubication.length !== 0 && (
+                    <div
+                        className="d-flex row justify-content-center"
+                        id="map"
+                    >
+                        <div className="card-body col-md-6">
+                            <MapView className="col-md-6" ubication={ubication} />
+                        </div>
+                    </div>
+                )}
         </div>
     );
 };
